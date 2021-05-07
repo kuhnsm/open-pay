@@ -56,10 +56,7 @@ export default function Employee() {
   const saveEmployee = async () => {
     console.log("SAVE EMPLOYEE", employee);
     try {
-      let result = await axios.post(
-        `http://localhost:8000/employees`,
-        employee
-      );
+      let result = await axios.post(`/employees`, employee);
       console.log(result);
     } catch (err) {
       console.log(`Error occured during employee save ${err}`);

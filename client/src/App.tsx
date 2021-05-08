@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNav from "./Layouts/TopNav";
 import Employee from "./Pages/Employees/Employee";
+import Employees from "./Pages/Employees/Employees";
 import config from "./config";
 
 config.init();
@@ -24,6 +25,9 @@ function App() {
         <Switch>
           <Route path="/employee">
             <Employee />
+          </Route>
+          <Route path="/employees">
+            <Employees />
           </Route>
           <Route path="/users">
             <Users />

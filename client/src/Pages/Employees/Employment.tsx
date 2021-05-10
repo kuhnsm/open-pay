@@ -78,7 +78,11 @@ export default function Employment(props: any) {
         <button className="btn btn-primary float-left" onClick={() => onBack()}>
           Back
         </button>
-        <button className="btn btn-primary float-right" type="submit">
+        <button
+          data-cy="employment-next"
+          className="btn btn-primary float-right"
+          type="submit"
+        >
           Next
         </button>
       </div>

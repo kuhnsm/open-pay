@@ -31,7 +31,6 @@ export default function Employees() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleDeleteEmployee = () => {
-    console.log("deleteEmployee", employee);
     setShow(false);
     axios
       .delete("/employees", { data: { _id: employee._id } })
@@ -41,12 +40,10 @@ export default function Employees() {
   };
 
   const editEmployee = (employee: any) => {
-    console.log("editEmployee", employee);
     history.push({ pathname: "/employee/", state: { data: employee } });
   };
 
   const deleteEmployee = (employee: any) => {
-    console.log("deleteEmployee", employee);
     setEmployee(employee);
     handleShow();
   };
@@ -62,7 +59,11 @@ export default function Employees() {
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleDeleteEmployee}>
+          <Button
+            data-cy="confirm-delete"
+            variant="primary"
+            onClick={handleDeleteEmployee}
+          >
             Delete Employee
           </Button>
         </Modal.Footer>
@@ -80,6 +81,7 @@ export default function Employees() {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <button
+              data-cy="add-employee"
               className="btn btn-outline-success my-2 my-sm-0"
               onClick={() => {
                 history.push("/employee/");
@@ -115,12 +117,14 @@ export default function Employees() {
                 <td>
                   {
                     <PencilIcon
+                      data-cy="edit-button"
                       style={{ height: "25px" }}
                       onClick={() => editEmployee(employee)}
                     />
                   }
                   {
                     <TrashIcon
+                      data-cy="delete-button"
                       style={{ marginLeft: "5px", height: "25px" }}
                       onClick={() => deleteEmployee(employee)}
                     />
@@ -131,6 +135,9 @@ export default function Employees() {
           })}
         </tbody>
       </table>
+      {data.length === 0 && (
+        <p>There are no employees found, please add employee.</p>
+      )}
       <DeleteDialog />
     </>
   );

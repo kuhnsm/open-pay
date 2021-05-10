@@ -20,7 +20,6 @@ interface EmployeeType {
 }
 export default function Employee() {
   const location = useLocation<EmployeeType>();
-  console.log(location.state);
   let employeeData = {
     demographic: {},
     address: {},
@@ -65,6 +64,7 @@ export default function Employee() {
   };
 
   const saveEmployee = async () => {
+    console.log("************************************", employee);
     try {
       if (employee.data._id) await axios.put("/employees", employee);
       else await axios.post("/employees", employee);
@@ -130,6 +130,7 @@ export default function Employee() {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <button
+                data-cy="save-employee-button"
                 className="btn btn-outline-success my-2 my-sm-0"
                 disabled={!employee?.data?.isComplete}
                 onClick={() => {

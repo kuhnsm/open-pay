@@ -6,7 +6,4 @@ const config = {
     }
   },
 };
-if (process.env.REACT_APP_ENV === "dev") {
-  console.log(config);
-}
 export default config;

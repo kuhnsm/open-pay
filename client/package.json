@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@heroicons/react": "^1.0.1",
     "@rjsf/bootstrap-4": "^2.4.1",
     "@rjsf/core": "^2.4.1",
     "@testing-library/jest-dom": "^5.11.8",

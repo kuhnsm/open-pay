@@ -54,7 +54,11 @@ export default function Address(props: any) {
         <button className="btn btn-primary float-left" onClick={() => onBack()}>
           Back
         </button>
-        <button className="btn btn-primary float-right" type="submit">
+        <button
+          data-cy="address-next"
+          className="btn btn-primary float-right"
+          type="submit"
+        >
           Next
         </button>
       </div>

@@ -14,3 +14,8 @@ npm run start
 
 Launch browser to:
 http://localhost:3000
+
+##Testing
+The client uses Cypress to test. You can run the test by running the script:
+
+npm run cy:run

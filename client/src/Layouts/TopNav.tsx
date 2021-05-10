@@ -25,7 +25,11 @@ export default function TopNav(props: any) {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/employees/">
+              <Link
+                data-cy="employees-link"
+                className="nav-link"
+                to="/employees/"
+              >
                 Employees
               </Link>
             </li>

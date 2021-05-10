@@ -24,7 +24,6 @@ export default function Employees() {
 
   useEffect(() => {
     axios.get("/employees").then((response) => {
-      console.log(response?.data?.employees);
       setData(response?.data?.employees);
     });
   }, []);
@@ -37,7 +36,6 @@ export default function Employees() {
     axios
       .delete("/employees", { data: { _id: employee._id } })
       .then((response) => {
-        console.log(response?.data?.employees);
         setData(response?.data?.employees);
       });
   };
@@ -107,7 +105,7 @@ export default function Employees() {
         <tbody>
           {data.map((employee: Employee) => {
             return (
-              <tr>
+              <tr key={employee?._id}>
                 <td>{employee?._id}</td>
                 <td>{employee?.demographic?.firstName}</td>
                 <td>{employee?.demographic?.lastName}</td>

@@ -25,18 +25,8 @@ export default function TopNav(props: any) {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/employee/">
-                Employee
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/payrolls">
-                Payrolls
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/settings">
-                Settings
+              <Link className="nav-link" to="/employees/">
+                Employees
               </Link>
             </li>
           </ul>

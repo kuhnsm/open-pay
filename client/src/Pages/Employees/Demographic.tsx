@@ -1,6 +1,8 @@
 import Form from "@rjsf/bootstrap-4";
 import { JSONSchema7 } from "json-schema";
+import { useHistory } from "react-router-dom";
 export default function Demographic(props: any) {
+  const history = useHistory();
   const schema: JSONSchema7 = {
     definitions: {
       gender: {
@@ -42,14 +44,29 @@ export default function Demographic(props: any) {
 
   const onSubmit = (data: any) => {
     props.update("demographic", data.formData);
+    history.push("/employee/address");
+  };
+
+  const onBack = () => {
+    history.push("/employees/");
   };
 
   return (
     <Form
+      className="p-3"
       showErrorList={false}
       schema={schema}
       formData={formData}
       onSubmit={onSubmit}
-    />
+    >
+      <div>
+        <button className="btn btn-primary float-left" onClick={() => onBack()}>
+          Back
+        </button>
+        <button className="btn btn-primary float-right" type="submit">
+          Next
+        </button>
+      </div>
+    </Form>
   );
 }

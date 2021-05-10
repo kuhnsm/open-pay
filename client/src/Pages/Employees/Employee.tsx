@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import Demographic from "./Demographic";
 import Address from "./Address";
+import Employment from "./Employment";
 import Job from "./Job";
 import Deductions from "./Deductions";
 import FederalTaxes from "./FederalTaxes";
 
 interface EmployeeType {
   data: {
+    _id?: any;
     demographic: any;
     address: any;
     job: any;
@@ -17,8 +19,17 @@ interface EmployeeType {
   };
 }
 export default function Employee() {
+  const location = useLocation<EmployeeType>();
+  console.log(location.state);
+  let employeeData = {
+    demographic: {},
+    address: {},
+    job: {},
+    isComplete: false,
+  };
+  if (location?.state?.data) employeeData = location?.state?.data;
   const [employee, updateEmployee] = useState<EmployeeType>({
-    data: { demographic: {}, address: {}, job: {}, isComplete: false },
+    data: employeeData,
   });
 
   function determineEmployeeComplete() {
@@ -54,10 +65,9 @@ export default function Employee() {
   };
 
   const saveEmployee = async () => {
-    console.log("SAVE EMPLOYEE", employee);
     try {
-      let result = await axios.post(`/employees`, employee);
-      console.log(result);
+      if (employee.data._id) await axios.put("/employees", employee);
+      else await axios.post("/employees", employee);
     } catch (err) {
       console.log(`Error occured during employee save ${err}`);
     }
@@ -78,18 +88,23 @@ export default function Employee() {
             </Link>
           </li>
           <li className="nav-item">
+            <Link className="nav-link" to="/employee/employment">
+              Employment
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link" to="/employee/job">
               Job
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/employee/deductions">
-              Deductions
+            <Link className="nav-link" to="/employee/federal-taxes">
+              Federal Taxes
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/employee/federal-taxes">
-              Federal Taxes
+            <Link className="nav-link" to="/employee/deductions">
+              Deductions
             </Link>
           </li>
         </ul>
@@ -132,6 +147,9 @@ export default function Employee() {
           </Route>
           <Route path="/employee/address">
             <Address update={saveData} employee={employee} />
+          </Route>
+          <Route path="/employee/employment">
+            <Employment update={saveData} employee={employee} />
           </Route>
           <Route path="/employee/job">
             <Job update={saveData} employee={employee} />

@@ -26,7 +26,7 @@ async function insertEmployees(employee: any) {
   } catch (e) {
     // Log Errors
     console.error(e);
-    throw Error("Error while Paginating Employees");
+    throw Error("Error while Inserting Employees");
   }
 }
 
@@ -46,7 +46,7 @@ async function updateEmployees(employee: any) {
   } catch (e) {
     // Log Errors
     console.error(e);
-    throw Error("Error while Paginating Employees");
+    throw Error("Error while Updating Employees");
   }
 }
 

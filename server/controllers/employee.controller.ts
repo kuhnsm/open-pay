@@ -26,6 +26,7 @@ async function insertEmployees(
     return res.status(200).json({
       status: 200,
       message: "Succesfully Employees Insert",
+      employees,
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -42,6 +43,7 @@ async function updateEmployees(
     return res.status(200).json({
       status: 200,
       message: "Succesfully Employees Update",
+      employees,
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });

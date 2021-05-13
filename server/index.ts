@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
@@ -18,8 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 app.use(routes);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../public/", "index.html"));
+});
 
 async function start() {
   function listen() {

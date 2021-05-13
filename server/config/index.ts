@@ -1,7 +1,8 @@
+console.log("ENV>>>>", process.env.MONGO_URL);
 const config = {
-  URL: "mongodb://localhost:27017/open-pay-db",
+  URL: process.env.MONGO_URL ?? "mongodb://localhost:27017/open-pay-db",
   dbName: "open-pay-db",
-  port: 8000,
+  port: process.env.PORT,
 };
-
+console.log("config>>>>>", config);
 export default config;

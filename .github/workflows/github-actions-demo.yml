@@ -17,4 +17,4 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Build React Client
         run: |
-          sh ./client/buildClient.sh
+          sh ./buildClient.sh

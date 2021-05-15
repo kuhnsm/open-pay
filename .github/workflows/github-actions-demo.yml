@@ -24,6 +24,6 @@ jobs:
         run: |
           sh ./buildClient.sh
       - name: Docker compose up
-        working-directory: ./client
+        working-directory: ./server
         run: |
           docker-compose up --exit-code-from web

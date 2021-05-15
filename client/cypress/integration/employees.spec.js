@@ -1,6 +1,6 @@
 describe("Employee Tests", () => {
   it("should add an employee.", () => {
-    cy.visit("http://localhost:3000/employees");
+    cy.visit("http://localhost:8001/web/employees");
     cy.contains("There are no employees found, please add employee.");
     cy.get("[data-cy=add-employee]").click();
 
@@ -40,7 +40,7 @@ describe("Employee Tests", () => {
   });
 
   it("should edit an employee.", () => {
-    cy.visit("http://localhost:3000/employees");
+    cy.visit("http://localhost:8001/web/employees");
     cy.contains("td", "Dillon") // gives you the cell
       .siblings() // gives you all the other cells in the row
       .get("[data-cy=edit-button]") // finds the delete button
@@ -55,6 +55,7 @@ describe("Employee Tests", () => {
   });
 
   it("should delete an employee.", () => {
+    cy.visit("http://localhost:8001/web/employees");
     cy.contains("td", "Dillon") // gives you the cell
       .siblings() // gives you all the other cells in the row
       .get("[data-cy=delete-button]") // finds the delete button

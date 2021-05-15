@@ -20,7 +20,7 @@ function Users() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/web">
       <TopNav>
         <Switch>
           <Route path="/employee">

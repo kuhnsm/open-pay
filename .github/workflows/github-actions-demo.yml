@@ -1,0 +1,40 @@
+name: Open Pay
+on: [push, pull_request]
+jobs:
+  Build-Test-Open-Pay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: List files in the client
+        working-directory: ./client
+        run: |
+          ls
+      - name: Build React Client
+        working-directory: ./client
+        run: |
+          sh ./buildClient.sh
+      - name: Docker compose up
+        working-directory: ./server
+        run: |
+          docker-compose up -d
+      - name: Docker list
+        working-directory: ./server
+        run: |
+          docker ps
+      - name: Server Install
+        working-directory: ./server
+        run: |
+          npm install
+      - name: Test server
+        working-directory: ./server
+        run: |
+          npm run test
+      - name: Test client
+        working-directory: ./client
+        run: |
+          npm run cy:run
+      - name: Docker compose down
+        working-directory: ./server
+        run: |
+          docker-compose down

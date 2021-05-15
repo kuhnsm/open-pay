@@ -15,12 +15,11 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - name: Change directories to ./client
-        run: |
-          cd client
       - name: List files in the client
+        working-directory: ./client
         run: |
           ls
       - name: Build React Client
+        working-directory: ./client
         run: |
           sh ./buildClient.sh

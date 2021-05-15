@@ -26,4 +26,4 @@ jobs:
       - name: Docker compose up
         working-directory: ./server
         run: |
-          docker-compose up --exit-code-from web
+          docker-compose up

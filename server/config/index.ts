@@ -1,4 +1,3 @@
-console.log("ENV>>>>", process.env.MONGO_URL);
 const config = {
   URL: process.env.MONGO_URL ?? "mongodb://localhost:27017/open-pay-db",
   dbName: "open-pay-db",

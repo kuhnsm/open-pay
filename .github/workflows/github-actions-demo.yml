@@ -34,4 +34,8 @@ jobs:
       - name: Test server
         working-directory: ./server
         run: |
+          npm install
+      - name: Test server
+        working-directory: ./server
+        run: |
           npm run test

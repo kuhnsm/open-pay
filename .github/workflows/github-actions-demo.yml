@@ -23,3 +23,7 @@ jobs:
         working-directory: ./client
         run: |
           sh ./buildClient.sh
+      - name: Docker compose up
+        working-directory: ./client
+        run: |
+          docker-compose up --exit-code-from web

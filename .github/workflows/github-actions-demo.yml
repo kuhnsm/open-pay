@@ -17,7 +17,7 @@ jobs:
       - name: Docker compose up
         working-directory: ./server
         run: |
-          docker compose up -d
+          docker-compose up -d
       - name: Docker list
         working-directory: ./server
         run: |
@@ -34,7 +34,7 @@ jobs:
         working-directory: ./client
         run: |
           npm run cy:run
-      - name: Docker compose up
+      - name: Docker compose down
         working-directory: ./server
         run: |
-          docker compose down
+          docker-compose down

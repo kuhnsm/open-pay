@@ -26,8 +26,12 @@ jobs:
       - name: Docker compose up
         working-directory: ./server
         run: |
-          docker-compose up
-      - name: Docker compose up
+          docker-compose up -d
+      - name: Docker list
+        working-directory: ./server
+        run: |
+          docker ps
+      - name: Test server
         working-directory: ./server
         run: |
           npm run test

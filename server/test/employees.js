@@ -8,7 +8,7 @@ describe("Employees Tests", () => {
   let saveEmployee;
   it("should insert the employee", (done) => {
     chai
-      .request("http://localhost:8000")
+      .request("http://localhost:8001")
       .post("/employees")
       .send(postEmployee)
       .end(function (err, res) {
@@ -24,7 +24,7 @@ describe("Employees Tests", () => {
   it("should update the employee", (done) => {
     saveEmployee[0].demographic.firstName = "William";
     chai
-      .request("http://localhost:8000")
+      .request("http://localhost:8001")
       .put("/employees")
       .send({ data: saveEmployee[0] })
       .end(function (err, res) {
@@ -40,7 +40,7 @@ describe("Employees Tests", () => {
 
   it("should get the employee", (done) => {
     chai
-      .request("http://localhost:8000")
+      .request("http://localhost:8001")
       .get("/employees")
       .end(function (err, res) {
         let getEmployee = res.body.employees.filter(
@@ -55,7 +55,7 @@ describe("Employees Tests", () => {
 
   it("should delete the employee", (done) => {
     chai
-      .request("http://localhost:8000")
+      .request("http://localhost:8001")
       .delete("/employees")
       .send({ _id: saveEmployee[0]._id })
       .end(function (err, res) {

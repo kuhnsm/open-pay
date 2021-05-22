@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
-import { Modal, Button } from "react-bootstrap";
+import { Search, Pencil, Trash } from "react-bootstrap-icons";
+import {
+  Modal,
+  Button,
+  InputGroup,
+  FormControl,
+  Navbar,
+  Nav,
+  Form,
+  Table,
+} from "react-bootstrap";
 interface Employee {
   _id?: string;
   demographic?: {
@@ -72,69 +81,80 @@ export default function Employees() {
   }
   return (
     <>
-      <nav className="navbar navbar-expand-sm navbar-light bg-light">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <input type="text"></input>
-          </li>
-        </ul>
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <button
+      <Navbar bg="light" expand="lg">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <InputGroup>
+              <FormControl
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="basic-addon2"
+              />
+              <InputGroup.Append>
+                <InputGroup.Text id="basic-addon2">
+                  <Search />
+                </InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
+          </Nav>
+          <Form inline>
+            <Button
               data-cy="add-employee"
-              className="btn btn-outline-success my-2 my-sm-0"
+              variant="success"
               onClick={() => {
                 history.push("/employee/");
               }}
             >
               New Employee
-            </button>
-          </li>
-        </ul>
-      </nav>
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Title</th>
-            <th scope="col">Employee Type</th>
-            <th scope="col">Pay Frequency</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((employee: Employee) => {
-            return (
-              <tr key={employee?._id}>
-                <td>{employee?._id}</td>
-                <td>{employee?.demographic?.firstName}</td>
-                <td>{employee?.demographic?.lastName}</td>
-                <td>{employee?.job?.jobTitle}</td>
-                <td>{employee?.job?.employeeType}</td>
-                <td>{employee?.job?.payFrequency}</td>
-                <td>
-                  {
-                    <PencilIcon
-                      data-cy="edit-button"
-                      style={{ height: "25px" }}
-                      onClick={() => editEmployee(employee)}
-                    />
-                  }
-                  {
-                    <TrashIcon
-                      data-cy="delete-button"
-                      style={{ marginLeft: "5px", height: "25px" }}
-                      onClick={() => deleteEmployee(employee)}
-                    />
-                  }
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </Button>
+          </Form>
+        </Navbar.Collapse>
+      </Navbar>
+      {
+        <Table hover>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Title</th>
+              <th scope="col">Employee Type</th>
+              <th scope="col">Pay Frequency</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((employee: Employee) => {
+              return (
+                <tr key={employee?._id}>
+                  <td>{employee?._id}</td>
+                  <td>{employee?.demographic?.firstName}</td>
+                  <td>{employee?.demographic?.lastName}</td>
+                  <td>{employee?.job?.jobTitle}</td>
+                  <td>{employee?.job?.employeeType}</td>
+                  <td>{employee?.job?.payFrequency}</td>
+                  <td>
+                    {
+                      <Pencil
+                        data-cy="edit-button"
+                        onClick={() => editEmployee(employee)}
+                      />
+                    }
+                    {
+                      <Trash
+                        data-cy="delete-button"
+                        style={{ marginLeft: "10px" }}
+                        onClick={() => deleteEmployee(employee)}
+                      />
+                    }
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      }
       {data.length === 0 && (
         <p>There are no employees found, please add employee.</p>
       )}

@@ -72,7 +72,6 @@ export default function Employee() {
       console.log(`Error occured during employee save ${err}`);
     }
   };
-  //<div className="col-2">
   return (
     <Row>
       <Col lg={2} xl={2} md={2} sm={2} xs={2}>

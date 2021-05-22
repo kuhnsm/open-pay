@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Search, Pencil, Trash } from "react-bootstrap-icons";
@@ -12,6 +12,8 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import debounce from "lodash.debounce";
+
 interface Employee {
   _id?: string;
   demographic?: {
@@ -57,6 +59,22 @@ export default function Employees() {
     handleShow();
   };
 
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((nextValue) => {
+        console.log("nextValue%%%%%%%%%%%%%%%%", nextValue);
+        axios.get("/employees").then((response) => {
+          setData(response?.data?.employees);
+        });
+      }, 1000),
+    [] // will be created only once initially
+  );
+
+  const searchEmployees = (event: any) => {
+    const { value: nextValue } = event.target;
+    debouncedSearch(nextValue);
+  };
+
   function DeleteDialog() {
     return (
       <Modal show={show} onHide={handleClose}>
@@ -79,6 +97,7 @@ export default function Employees() {
       </Modal>
     );
   }
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -90,6 +109,7 @@ export default function Employees() {
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="basic-addon2"
+                onChange={searchEmployees}
               />
               <InputGroup.Append>
                 <InputGroup.Text id="basic-addon2">

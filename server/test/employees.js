@@ -41,7 +41,7 @@ describe("Employees Tests", () => {
   it("should get the employee", (done) => {
     chai
       .request("http://localhost:8001")
-      .get("/employees")
+      .get("/employees?q=&skip=0&limit=10")
       .end(function (err, res) {
         let getEmployee = res.body.employees.filter(
           (employee) => employee.demographic.lastName === "Evans-Sdf"

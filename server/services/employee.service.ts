@@ -1,12 +1,19 @@
 import db from "../dao/DB";
 import { ObjectId } from "mongodb";
+import { employeeFind } from "../types/employees";
 
-async function getEmployees(query: any, skip: number, limit: number) {
+async function getEmployees(query: string, skip: number, limit: number) {
   try {
+    let find: employeeFind = { deletionDate: { $exists: false } };
+    if (query) {
+      find.$text = { $search: query };
+    }
     return await db
       .getDB()
       .collection("employees")
-      .find({ deletionDate: { $exists: false } })
+      .find(find)
+      .skip(skip)
+      .limit(limit)
       .toArray();
   } catch (e) {
     // Log Errors

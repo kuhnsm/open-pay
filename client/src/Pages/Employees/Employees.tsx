@@ -1,6 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
+import { getEmployees, deleteEmployee } from "../../Axios/Employees";
+
 import { Search, Pencil, Trash } from "react-bootstrap-icons";
 import {
   Modal,
@@ -34,7 +36,7 @@ export default function Employees() {
   const [employee, setEmployee] = useState<Employee>({});
 
   useEffect(() => {
-    axios.get("/employees").then((response) => {
+    getEmployees("", 0, 10).then((response: any) => {
       setData(response?.data?.employees);
     });
   }, []);
@@ -43,18 +45,18 @@ export default function Employees() {
   const handleShow = () => setShow(true);
   const handleDeleteEmployee = () => {
     setShow(false);
-    axios
-      .delete("/employees", { data: { _id: employee._id } })
-      .then((response) => {
+    if (employee._id) {
+      deleteEmployee(employee._id).then((response) => {
         setData(response?.data?.employees);
       });
+    }
   };
 
   const editEmployee = (employee: any) => {
     history.push({ pathname: "/employee/", state: { data: employee } });
   };
 
-  const deleteEmployee = (employee: any) => {
+  const deleteEmployeeDialog = (employee: any) => {
     setEmployee(employee);
     handleShow();
   };
@@ -63,7 +65,7 @@ export default function Employees() {
     () =>
       debounce((nextValue) => {
         console.log("nextValue%%%%%%%%%%%%%%%%", nextValue);
-        axios.get("/employees").then((response) => {
+        getEmployees(nextValue, 0, 10).then((response: any) => {
           setData(response?.data?.employees);
         });
       }, 1000),
@@ -145,7 +147,7 @@ export default function Employees() {
             </tr>
           </thead>
           <tbody>
-            {data.map((employee: Employee) => {
+            {data?.map((employee: Employee) => {
               return (
                 <tr key={employee?._id}>
                   <td>{employee?._id}</td>
@@ -165,7 +167,7 @@ export default function Employees() {
                       <Trash
                         data-cy="delete-button"
                         style={{ marginLeft: "10px" }}
-                        onClick={() => deleteEmployee(employee)}
+                        onClick={() => deleteEmployeeDialog(employee)}
                       />
                     }
                   </td>

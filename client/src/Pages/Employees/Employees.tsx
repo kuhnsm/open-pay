@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-//import axios from "axios";
 import { getEmployees, deleteEmployee } from "../../Axios/Employees";
 
 import { Search, Pencil, Trash } from "react-bootstrap-icons";
@@ -64,7 +63,6 @@ export default function Employees() {
   const debouncedSearch = useMemo(
     () =>
       debounce((nextValue) => {
-        console.log("nextValue%%%%%%%%%%%%%%%%", nextValue);
         getEmployees(nextValue, 0, 10).then((response: any) => {
           setData(response?.data?.employees);
         });
@@ -108,6 +106,7 @@ export default function Employees() {
           <Nav className="mr-auto">
             <InputGroup>
               <FormControl
+                data-cy="search-employee"
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="basic-addon2"

@@ -1,8 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
-import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
-import { Modal, Button } from "react-bootstrap";
+import { getEmployees, deleteEmployee } from "../../Axios/Employees";
+
+import { Search, Pencil, Trash } from "react-bootstrap-icons";
+import {
+  Modal,
+  Button,
+  InputGroup,
+  FormControl,
+  Navbar,
+  Nav,
+  Form,
+  Table,
+} from "react-bootstrap";
+import debounce from "lodash.debounce";
+
 interface Employee {
   _id?: string;
   demographic?: {
@@ -23,7 +35,7 @@ export default function Employees() {
   const [employee, setEmployee] = useState<Employee>({});
 
   useEffect(() => {
-    axios.get("/employees").then((response) => {
+    getEmployees("", 0, 10).then((response: any) => {
       setData(response?.data?.employees);
     });
   }, []);
@@ -32,20 +44,35 @@ export default function Employees() {
   const handleShow = () => setShow(true);
   const handleDeleteEmployee = () => {
     setShow(false);
-    axios
-      .delete("/employees", { data: { _id: employee._id } })
-      .then((response) => {
+    if (employee._id) {
+      deleteEmployee(employee._id).then((response) => {
         setData(response?.data?.employees);
       });
+    }
   };
 
   const editEmployee = (employee: any) => {
     history.push({ pathname: "/employee/", state: { data: employee } });
   };
 
-  const deleteEmployee = (employee: any) => {
+  const deleteEmployeeDialog = (employee: any) => {
     setEmployee(employee);
     handleShow();
+  };
+
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((nextValue) => {
+        getEmployees(nextValue, 0, 10).then((response: any) => {
+          setData(response?.data?.employees);
+        });
+      }, 1000),
+    [] // will be created only once initially
+  );
+
+  const searchEmployees = (event: any) => {
+    const { value: nextValue } = event.target;
+    debouncedSearch(nextValue);
   };
 
   function DeleteDialog() {
@@ -70,71 +97,85 @@ export default function Employees() {
       </Modal>
     );
   }
+
   return (
     <>
-      <nav className="navbar navbar-expand-sm navbar-light bg-light">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <input type="text"></input>
-          </li>
-        </ul>
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <button
+      <Navbar bg="light" expand="lg">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <InputGroup>
+              <FormControl
+                data-cy="search-employee"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="basic-addon2"
+                onChange={searchEmployees}
+              />
+              <InputGroup.Append>
+                <InputGroup.Text id="basic-addon2">
+                  <Search />
+                </InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
+          </Nav>
+          <Form inline>
+            <Button
               data-cy="add-employee"
-              className="btn btn-outline-success my-2 my-sm-0"
+              variant="success"
               onClick={() => {
                 history.push("/employee/");
               }}
             >
               New Employee
-            </button>
-          </li>
-        </ul>
-      </nav>
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Title</th>
-            <th scope="col">Employee Type</th>
-            <th scope="col">Pay Frequency</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((employee: Employee) => {
-            return (
-              <tr key={employee?._id}>
-                <td>{employee?._id}</td>
-                <td>{employee?.demographic?.firstName}</td>
-                <td>{employee?.demographic?.lastName}</td>
-                <td>{employee?.job?.jobTitle}</td>
-                <td>{employee?.job?.employeeType}</td>
-                <td>{employee?.job?.payFrequency}</td>
-                <td>
-                  {
-                    <PencilIcon
-                      data-cy="edit-button"
-                      style={{ height: "25px" }}
-                      onClick={() => editEmployee(employee)}
-                    />
-                  }
-                  {
-                    <TrashIcon
-                      data-cy="delete-button"
-                      style={{ marginLeft: "5px", height: "25px" }}
-                      onClick={() => deleteEmployee(employee)}
-                    />
-                  }
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </Button>
+          </Form>
+        </Navbar.Collapse>
+      </Navbar>
+      {
+        <Table hover>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Title</th>
+              <th scope="col">Employee Type</th>
+              <th scope="col">Pay Frequency</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((employee: Employee) => {
+              return (
+                <tr key={employee?._id}>
+                  <td>{employee?._id}</td>
+                  <td>{employee?.demographic?.firstName}</td>
+                  <td>{employee?.demographic?.lastName}</td>
+                  <td>{employee?.job?.jobTitle}</td>
+                  <td>{employee?.job?.employeeType}</td>
+                  <td>{employee?.job?.payFrequency}</td>
+                  <td>
+                    {
+                      <Pencil
+                        data-cy="edit-button"
+                        onClick={() => editEmployee(employee)}
+                      />
+                    }
+                    {
+                      <Trash
+                        data-cy="delete-button"
+                        style={{ marginLeft: "10px" }}
+                        onClick={() => deleteEmployeeDialog(employee)}
+                      />
+                    }
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      }
       {data.length === 0 && (
         <p>There are no employees found, please add employee.</p>
       )}

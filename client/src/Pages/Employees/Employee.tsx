@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Switch, Route, Link, useLocation } from "react-router-dom";
 import axios from "axios";
-
+import { Nav, Row, Col, Navbar, Button } from "react-bootstrap";
 import Demographic from "./Demographic";
 import Address from "./Address";
 import Employment from "./Employment";
@@ -72,76 +72,69 @@ export default function Employee() {
       console.log(`Error occured during employee save ${err}`);
     }
   };
-
   return (
-    <div className="row">
-      <div className="col-2">
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <Link className="nav-link active" to="/employee/">
+    <Row>
+      <Col lg={2} xl={2} md={2} sm={2} xs={2}>
+        <Nav className="flex-column">
+          <Nav.Link>
+            <Link className="nav-link" to="/employee/">
               Demographic
             </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link active" to="/employee/address">
+          </Nav.Link>
+          <Nav.Link>
+            <Link className="nav-link" to="/employee/address">
               Address
             </Link>
-          </li>
-          <li className="nav-item">
+          </Nav.Link>
+          <Nav.Link>
             <Link className="nav-link" to="/employee/employment">
               Employment
             </Link>
-          </li>
-          <li className="nav-item">
+          </Nav.Link>
+          <Nav.Link>
             <Link className="nav-link" to="/employee/job">
               Job
             </Link>
-          </li>
-          <li className="nav-item">
+          </Nav.Link>
+          <Nav.Link>
             <Link className="nav-link" to="/employee/federal-taxes">
               Federal Taxes
             </Link>
-          </li>
-          <li className="nav-item">
+          </Nav.Link>
+          <Nav.Link>
             <Link className="nav-link" to="/employee/deductions">
               Deductions
             </Link>
-          </li>
-        </ul>
-      </div>
-      <div className="col">
-        <nav className="navbar navbar-expand-sm navbar-light bg-light">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <span className="nav-link">
-                {`Employee: ${
-                  employee?.data?.demographic?.lastName || "LastName"
-                }, ${employee?.data?.demographic?.firstName || "FirstName"}`}
-              </span>
-            </li>
-            <li className="nav-item">
-              <span className="nav-link">
-                {`Status: ${
-                  employee?.data?.isComplete ? "Complete" : "Incomplete"
-                }`}
-              </span>
-            </li>
-          </ul>
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <button
-                data-cy="save-employee-button"
-                className="btn btn-outline-success my-2 my-sm-0"
-                disabled={!employee?.data?.isComplete}
-                onClick={() => {
-                  saveEmployee();
-                }}
-              >
-                Save Employee
-              </button>
-            </li>
-          </ul>
-        </nav>
+          </Nav.Link>
+        </Nav>
+      </Col>
+      <Col>
+        <Navbar bg="light" expand="lg">
+          <Nav className="mr-auto">
+            <Navbar.Text>
+              {`Employee: ${
+                employee?.data?.demographic?.lastName || "LastName"
+              }, ${employee?.data?.demographic?.firstName || "FirstName"}`}
+            </Navbar.Text>
+            <Navbar.Text>
+              {`Status: ${
+                employee?.data?.isComplete ? "Complete" : "Incomplete"
+              }`}
+            </Navbar.Text>
+          </Nav>
+          <Nav className="ml-auto">
+            <Button
+              data-cy="save-employee-button"
+              variant="outline-success"
+              disabled={!employee?.data?.isComplete}
+              onClick={() => {
+                saveEmployee();
+              }}
+            >
+              Save Employee
+            </Button>
+          </Nav>
+        </Navbar>
         <Switch>
           <Route exact path="/employee/">
             <Demographic update={saveData} employee={employee} />
@@ -162,7 +155,7 @@ export default function Employee() {
             <FederalTaxes update={saveData} employee={employee} />
           </Route>
         </Switch>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 }

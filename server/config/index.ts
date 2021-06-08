@@ -3,4 +3,5 @@ const config = {
   dbName: "open-pay-db",
   port: process.env.PORT,
 };
+console.log("config>", config);
 export default config;

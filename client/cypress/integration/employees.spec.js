@@ -96,7 +96,6 @@ describe("Employee Tests", () => {
     cy.contains("Jim").should("not.exist");
   });
 
-  /*
   it("should edit an employee.", () => {
     cy.visit("http://localhost:8001/web/employees");
     cy.contains("td", "Dillon") // gives you the cell
@@ -130,5 +129,4 @@ describe("Employee Tests", () => {
     cy.get("[data-cy=confirm-delete]").click();
     cy.contains("There are no employees found, please add employee.");
   });
-  */
 });

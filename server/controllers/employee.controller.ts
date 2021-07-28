@@ -12,21 +12,29 @@ async function getEmployees(req: Request, res: Response) {
       .status(400)
       .json({ status: 400, message: "Limit must be string" });
   }
-  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
-  let limit = req.query.limit ? parseInt(req.query.limit) : 10;
-  let query = req.query.q ? req.query.q : "";
-  if (typeof query !== "string") {
+  if (typeof req.query.q !== "string") {
     return res
       .status(400)
       .json({ status: 400, message: "Query must be string" });
   }
+  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+  let limit = req.query.limit ? parseInt(req.query.limit) : 10;
+  let query = req.query.q ? req.query.q : "";
   try {
     let employees = await EmployeeService.getEmployees(query, skip, limit);
-    return res.status(200).json({
-      status: 200,
-      employees: employees,
-      message: "Succesfully Employees Retrieved",
-    });
+    //default total employee count to the length of array of returned employees
+    let totalEmployeeCount = employees.length;
+    //if there is not a search query, then get the total number of documents
+    if (!query)
+      totalEmployeeCount = await EmployeeService.getTotalEmployeeCount();
+    return res
+      .status(200)
+      .append("X-Total-Count", totalEmployeeCount.toString())
+      .json({
+        status: 200,
+        employees: employees,
+        message: "Succesfully Employees Retrieved",
+      });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }

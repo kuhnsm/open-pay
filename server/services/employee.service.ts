@@ -22,6 +22,16 @@ async function getEmployees(query: string, skip: number, limit: number) {
   }
 }
 
+async function getTotalEmployeeCount() {
+  try {
+    return await db.getDB().collection("employees").estimatedDocumentCount();
+  } catch (e) {
+    // Log Errors
+    console.error(e);
+    throw Error("Error while getting employee record count");
+  }
+}
+
 async function insertEmployees(employee: any) {
   try {
     await db.getDB().collection("employees").insertOne(employee);
@@ -80,6 +90,7 @@ async function deleteEmployees(_id: any) {
 
 export default {
   getEmployees,
+  getTotalEmployeeCount,
   insertEmployees,
   updateEmployees,
   deleteEmployees,

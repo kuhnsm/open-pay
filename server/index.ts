@@ -12,7 +12,10 @@ import db from "./dao/DB";
 import routes from "./routes";
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  exposedHeaders: "X-Total-Count",
+};
+app.use(cors(corsOptions));
 
 app.use(logger("dev"));
 app.use(express.json());

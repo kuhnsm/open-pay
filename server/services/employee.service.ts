@@ -24,7 +24,11 @@ async function getEmployees(query: string, skip: number, limit: number) {
 
 async function getTotalEmployeeCount() {
   try {
-    return await db.getDB().collection("employees").estimatedDocumentCount();
+    return await db
+      .getDB()
+      .collection("employees")
+      .find({ deletionDate: { $exists: false } })
+      .count();
   } catch (e) {
     // Log Errors
     console.error(e);
@@ -34,12 +38,7 @@ async function getTotalEmployeeCount() {
 
 async function insertEmployees(employee: any) {
   try {
-    await db.getDB().collection("employees").insertOne(employee);
-    return await db
-      .getDB()
-      .collection("employees")
-      .find({ deletionDate: { $exists: false } })
-      .toArray();
+    return await db.getDB().collection("employees").insertOne(employee);
   } catch (e) {
     // Log Errors
     console.error(e);
@@ -51,15 +50,10 @@ async function updateEmployees(employee: any) {
   try {
     let thisId = employee._id;
     delete employee._id;
-    await db
-      .getDB()
-      .collection("employees")
-      .replaceOne({ _id: new ObjectId(thisId) }, employee);
     return await db
       .getDB()
       .collection("employees")
-      .find({ deletionDate: { $exists: false } })
-      .toArray();
+      .replaceOne({ _id: new ObjectId(thisId) }, employee);
   } catch (e) {
     // Log Errors
     console.error(e);
@@ -69,18 +63,13 @@ async function updateEmployees(employee: any) {
 
 async function deleteEmployees(_id: any) {
   try {
-    await db
+    return await db
       .getDB()
       .collection("employees")
       .updateOne(
         { _id: new ObjectId(_id) },
         { $set: { deletionDate: new Date() } }
       );
-    return await db
-      .getDB()
-      .collection("employees")
-      .find({ deletionDate: { $exists: false } })
-      .toArray();
   } catch (e) {
     // Log Errors
     console.error(e);

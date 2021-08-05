@@ -96,11 +96,7 @@ async function insertEmployees(numEmployees: number) {
   console.log("Done.");
 }
 
-async function setup() {
+export default async function setupTestEmployees() {
   let numEmployees = 100;
-  await db.connect();
-  await insertEmployees(numEmployees);
-  process.exit(0);
+  return await insertEmployees(numEmployees);
 }
-
-setup();

@@ -1,6 +1,7 @@
 import { MongoClient, Db } from "mongodb";
 import config from "../config";
 import employeeTextSearchIndex from "../config/employeeTextSearchIndex";
+import setupTestEmployees from "../test/setup";
 
 function toArray(iterator: any) {
   return new Promise((resolve, reject) => {
@@ -27,6 +28,11 @@ const db = (function () {
       await this.getDB()
         .collection("employees")
         .createIndex(employeeTextSearchIndex);
+      // if the environment variable is set, then insert test users.
+      console.log("config.setupTestUsersFlag>", config.setupTestUsersFlag);
+      if (config.setupTestUsersFlag) {
+        await setupTestEmployees();
+      }
       console.log("Database setup");
     },
     async connect() {

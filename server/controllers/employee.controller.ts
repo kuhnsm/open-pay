@@ -42,12 +42,16 @@ async function getEmployees(req: Request, res: Response) {
 
 async function insertEmployees(req: Request, res: Response) {
   try {
-    let results = await EmployeeService.insertEmployees(req.body.data);
-    return res.status(200).json({
-      status: 200,
-      message: "Succesfully Employees Insert",
-      results,
-    });
+    let employees = await EmployeeService.insertEmployees(req.body.data);
+    let totalEmployeeCount = await EmployeeService.getTotalEmployeeCount();
+    return res
+      .status(200)
+      .append("X-Total-Count", totalEmployeeCount.toString())
+      .json({
+        status: 200,
+        message: "Succesfully Employees Insert",
+        employees,
+      });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -55,12 +59,16 @@ async function insertEmployees(req: Request, res: Response) {
 
 async function updateEmployees(req: Request, res: Response) {
   try {
-    let results = await EmployeeService.updateEmployees(req.body.data);
-    return res.status(200).json({
-      status: 200,
-      message: "Succesfully Employees Update",
-      results,
-    });
+    let employees = await EmployeeService.updateEmployees(req.body.data);
+    let totalEmployeeCount = await EmployeeService.getTotalEmployeeCount();
+    return res
+      .status(200)
+      .append("X-Total-Count", totalEmployeeCount.toString())
+      .json({
+        status: 200,
+        message: "Succesfully Employees Update",
+        employees,
+      });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -68,12 +76,16 @@ async function updateEmployees(req: Request, res: Response) {
 
 async function deleteEmployees(req: Request, res: Response) {
   try {
-    let results = await EmployeeService.deleteEmployees(req.body._id);
-    return res.status(200).json({
-      status: 200,
-      results,
-      message: "Succesfully Employees Delete",
-    });
+    let employees = await EmployeeService.deleteEmployees(req.body._id);
+    let totalEmployeeCount = await EmployeeService.getTotalEmployeeCount();
+    return res
+      .status(200)
+      .append("X-Total-Count", totalEmployeeCount.toString())
+      .json({
+        status: 200,
+        employees,
+        message: "Succesfully Employees Delete",
+      });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }

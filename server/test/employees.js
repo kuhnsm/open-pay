@@ -12,8 +12,11 @@ describe("Employees Tests", () => {
       .post("/employees")
       .send(postEmployee)
       .end(function (err, res) {
+        console.log(res.body);
+        console.log(res.headers);
         expect(res.body.message).to.equal("Succesfully Employees Insert");
-        expect(res.body.results.insertedCount).to.equal(1);
+        expect(res.body.employees.length).to.equal(10);
+        expect(res.headers["x-total-count"]).to.equal("101");
         expect(err).to.be.null;
         expect(res).to.have.status(200);
         done();
@@ -44,8 +47,8 @@ describe("Employees Tests", () => {
       .put("/employees")
       .send({ data: saveEmployee })
       .end(function (err, res) {
-        expect(res.body.results.nModified).to.equal(1);
-        expect(res.body.results.modifiedCount).to.equal(1);
+        expect(res.body.employees.length).to.equal(10);
+        expect(res.headers["x-total-count"]).to.equal("101");
         expect(err).to.be.null;
         expect(res).to.have.status(200);
         done();
@@ -88,8 +91,9 @@ describe("Employees Tests", () => {
       .delete("/employees")
       .send({ _id: saveEmployeeID })
       .end(function (err, res) {
-        expect(res.body.results.modifiedCount).to.equal(1);
+        expect(res.body.employees.length).to.equal(10);
         expect(res.body.message).to.equal("Succesfully Employees Delete");
+        expect(res.headers["x-total-count"]).to.equal("100");
         expect(err).to.be.null;
         expect(res).to.have.status(200);
         done();

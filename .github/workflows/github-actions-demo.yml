@@ -36,7 +36,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run cy:run --record
+          cypress run --record
       - name: Docker compose down
         working-directory: ./server
         run: |

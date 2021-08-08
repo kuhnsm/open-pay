@@ -31,15 +31,12 @@ jobs:
         run: |
           npm run test
       - name: Test client
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm run cy:run
-          record: true
+        working-directory: ./client
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: ./client
+        run: |
+          npm run cy:run --record
       - name: Docker compose down
         working-directory: ./server
         run: |

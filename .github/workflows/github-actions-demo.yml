@@ -32,6 +32,9 @@ jobs:
           npm run test
       - name: Test client
         working-directory: ./client
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets GITHUB_TOKEN }}
         run: |
           npm run cy:run
       - name: Docker compose down

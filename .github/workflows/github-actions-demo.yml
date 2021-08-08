@@ -33,6 +33,7 @@ jobs:
       - name: Test client
         uses: cypress-io/github-action@v2
         with:
+          build: npm run build
           start: npm run cy:run
           record: true
         env:

@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { getEmployees, deleteEmployee } from "../../Axios/Employees";
-
 import { Search, Pencil, Trash } from "react-bootstrap-icons";
 import {
   Modal,
@@ -14,6 +13,7 @@ import {
   Table,
 } from "react-bootstrap";
 import debounce from "lodash.debounce";
+import ReactPaginate from "react-paginate";
 
 interface Employee {
   _id?: string;
@@ -33,10 +33,13 @@ export default function Employees() {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [employee, setEmployee] = useState<Employee>({});
+  const [totalRecords, setTotalRecords] = useState(0);
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    getEmployees("", 0, 10).then((response: any) => {
+    getEmployees("", 0, itemsPerPage).then((response: any) => {
       setData(response?.data?.employees);
+      setTotalRecords(response.headers["x-total-count"]);
     });
   }, []);
 
@@ -65,6 +68,7 @@ export default function Employees() {
       debounce((nextValue) => {
         getEmployees(nextValue, 0, 10).then((response: any) => {
           setData(response?.data?.employees);
+          setTotalRecords(response.headers["x-total-count"]);
         });
       }, 1000),
     [] // will be created only once initially
@@ -97,6 +101,15 @@ export default function Employees() {
       </Modal>
     );
   }
+
+  const handlePageClick = (data: { selected: number }) => {
+    console.log("data", data);
+    console.log("data.selected", data.selected);
+    getEmployees("", data.selected * 10, 10).then((response: any) => {
+      setData(response?.data?.employees);
+      setTotalRecords(response.headers["x-total-count"]);
+    });
+  };
 
   return (
     <>
@@ -180,6 +193,24 @@ export default function Employees() {
         <p>There are no employees found, please add employee.</p>
       )}
       <DeleteDialog />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          pageCount={totalRecords / itemsPerPage}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousLinkClassName={"page-link"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-link"}
+        />
+      </div>
     </>
   );
 }

@@ -6,6 +6,7 @@ services:
     environment:
       - MONGO_URL="mongodb://mongo:27017/open-pay-db"
       - PORT=8001
+      - SETUP_TEST_USERS=true
     ports:
       - 8001:8001
     volumes:

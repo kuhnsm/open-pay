@@ -22,6 +22,20 @@ async function getEmployees(query: string, skip: number, limit: number) {
   }
 }
 
+async function getTotalEmployeeCount() {
+  try {
+    return await db
+      .getDB()
+      .collection("employees")
+      .find({ deletionDate: { $exists: false } })
+      .count();
+  } catch (e) {
+    // Log Errors
+    console.error(e);
+    throw Error("Error while getting employee record count");
+  }
+}
+
 async function insertEmployees(employee: any) {
   try {
     await db.getDB().collection("employees").insertOne(employee);
@@ -29,6 +43,8 @@ async function insertEmployees(employee: any) {
       .getDB()
       .collection("employees")
       .find({ deletionDate: { $exists: false } })
+      .skip(0)
+      .limit(10)
       .toArray();
   } catch (e) {
     // Log Errors
@@ -49,6 +65,8 @@ async function updateEmployees(employee: any) {
       .getDB()
       .collection("employees")
       .find({ deletionDate: { $exists: false } })
+      .skip(0)
+      .limit(10)
       .toArray();
   } catch (e) {
     // Log Errors
@@ -70,6 +88,8 @@ async function deleteEmployees(_id: any) {
       .getDB()
       .collection("employees")
       .find({ deletionDate: { $exists: false } })
+      .skip(0)
+      .limit(10)
       .toArray();
   } catch (e) {
     // Log Errors
@@ -80,6 +100,7 @@ async function deleteEmployees(_id: any) {
 
 export default {
   getEmployees,
+  getTotalEmployeeCount,
   insertEmployees,
   updateEmployees,
   deleteEmployees,

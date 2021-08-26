@@ -1,0 +1,30 @@
+{
+  "name": "payroll",
+  "version": "1.0.0",
+  "description": "Payroll engine for open-pay",
+  "main": "index.ts",
+  "scripts": {
+    "test": "mocha -r ts-node/register ./**/*.spec.ts",
+    "build": "tsc --project ./"
+  },
+  "author": "MKuhns",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/register": "^7.15.3",
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/mongodb": "^3.6.12",
+    "@types/node": "^16.6.1",
+    "mongodb": "^3.6.6"
+  }
+}

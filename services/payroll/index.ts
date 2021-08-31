@@ -4,7 +4,7 @@ import {
   calculatePreTaxDeductions,
   calculatePostTaxDeductions,
 } from "./deductions";
-import calculateFederalTaxes from "./federalTaxes";
+import calculateFederalTaxes from "./FederalTaxes/federalTaxes";
 import calculateStateTaxes from "./stateTaxes";
 import updateYTD from "./updateYTD";
 

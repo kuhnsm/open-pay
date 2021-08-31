@@ -1,0 +1,182 @@
+const marriedFilingJointly = [
+  {
+    atLeast: 0,
+    lessThan: 12550,
+    tentativeAmt: 0.0,
+    plusPercentage: 0,
+    adjustedAnnualWageExceeds: 0,
+  },
+  {
+    atLeast: 12550,
+    lessThan: 22500,
+    tentativeAmt: 0.0,
+    plusPercentage: 0.1,
+    adjustedAnnualWageExceeds: 12550,
+  },
+  {
+    atLeast: 22500,
+    lessThan: 53075,
+    tentativeAmt: 995.0,
+    plusPercentage: 0.12,
+    adjustedAnnualWageExceeds: 22500,
+  },
+  {
+    atLeast: 53075,
+    lessThan: 98925,
+    tentativeAmt: 4664.0,
+    plusPercentage: 0.22,
+    adjustedAnnualWageExceeds: 53075,
+  },
+  {
+    atLeast: 98925,
+    lessThan: 177475,
+    tentativeAmt: 14751.0,
+    plusPercentage: 0.24,
+    adjustedAnnualWageExceeds: 98925,
+  },
+  {
+    atLeast: 177475,
+    lessThan: 221975,
+    tentativeAmt: 33603.0,
+    plusPercentage: 0.32,
+    adjustedAnnualWageExceeds: 177475,
+  },
+  {
+    atLeast: 221975,
+    lessThan: 326700,
+    tentativeAmt: 47843.0,
+    plusPercentage: 0.35,
+    adjustedAnnualWageExceeds: 221975,
+  },
+  {
+    atLeast: 326700,
+    lessThan: Number.MAX_VALUE,
+    tentativeAmt: 84496.75,
+    plusPercentage: 0.37,
+    adjustedAnnualWageExceeds: 326700,
+  },
+];
+
+const singleOrMarriedFilingSeparately = [
+  {
+    atLeast: 0,
+    lessThan: 6275,
+    tentativeAmt: 0.0,
+    plusPercentage: 0,
+    adjustedAnnualWageExceeds: 0,
+  },
+  {
+    atLeast: 6275,
+    lessThan: 11250,
+    tentativeAmt: 0.0,
+    plusPercentage: 0.1,
+    adjustedAnnualWageExceeds: 6275,
+  },
+  {
+    atLeast: 11250,
+    lessThan: 26538,
+    tentativeAmt: 497.5,
+    plusPercentage: 0.12,
+    adjustedAnnualWageExceeds: 11250,
+  },
+  {
+    atLeast: 26538,
+    lessThan: 49463,
+    tentativeAmt: 2332.0,
+    plusPercentage: 0.22,
+    adjustedAnnualWageExceeds: 26538,
+  },
+  {
+    atLeast: 49463,
+    lessThan: 88738,
+    tentativeAmt: 7375.5,
+    plusPercentage: 0.24,
+    adjustedAnnualWageExceeds: 49463,
+  },
+  {
+    atLeast: 88738,
+    lessThan: 110988,
+    tentativeAmt: 16801.5,
+    plusPercentage: 0.32,
+    adjustedAnnualWageExceeds: 88738,
+  },
+  {
+    atLeast: 110988,
+    lessThan: 268075,
+    tentativeAmt: 23921.5,
+    plusPercentage: 0.35,
+    adjustedAnnualWageExceeds: 110988,
+  },
+  {
+    atLeast: 268075,
+    lessThan: Number.MAX_VALUE,
+    tentativeAmt: 78902.13,
+    plusPercentage: 0.37,
+    adjustedAnnualWageExceeds: 268075,
+  },
+];
+
+const headOfHousehold = [
+  {
+    atLeast: 0,
+    lessThan: 9400,
+    tentativeAmt: 0.0,
+    plusPercentage: 0,
+    adjustedAnnualWageExceeds: 0,
+  },
+  {
+    atLeast: 9400,
+    lessThan: 16500,
+    tentativeAmt: 0.0,
+    plusPercentage: 0.1,
+    adjustedAnnualWageExceeds: 9400,
+  },
+  {
+    atLeast: 16500,
+    lessThan: 36500,
+    tentativeAmt: 710.0,
+    plusPercentage: 0.12,
+    adjustedAnnualWageExceeds: 16500,
+  },
+  {
+    atLeast: 36500,
+    lessThan: 52575,
+    tentativeAmt: 3110.0,
+    plusPercentage: 0.22,
+    adjustedAnnualWageExceeds: 36500,
+  },
+  {
+    atLeast: 52575,
+    lessThan: 91850,
+    tentativeAmt: 6646.5,
+    plusPercentage: 0.24,
+    adjustedAnnualWageExceeds: 52575,
+  },
+  {
+    atLeast: 91850,
+    lessThan: 114100,
+    tentativeAmt: 16072.5,
+    plusPercentage: 0.32,
+    adjustedAnnualWageExceeds: 91850,
+  },
+  {
+    atLeast: 114100,
+    lessThan: 271200,
+    tentativeAmt: 23192.5,
+    plusPercentage: 0.35,
+    adjustedAnnualWageExceeds: 114100,
+  },
+  {
+    atLeast: 271200,
+    lessThan: Number.MAX_VALUE,
+    tentativeAmt: 78177.5,
+    plusPercentage: 0.37,
+    adjustedAnnualWageExceeds: 271200,
+  },
+];
+
+export {
+  marriedFilingJointly,
+  singleOrMarriedFilingSeparately,
+  headOfHousehold,
+};

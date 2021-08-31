@@ -1,6 +1,6 @@
 import chai from "chai";
 const expect = chai.expect;
-import calculateFederalTaxes from "../federalTaxes";
+import calculateFederalTaxes from "../FederalTaxes/federalTaxes";
 
 let employee = {
   job: {

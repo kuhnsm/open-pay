@@ -49,7 +49,7 @@ function getTaxBracket(filingStatus, adjustedAnnualWageAmount) {
   })[0];
 }
 
-export default function calculateFederalTaxes(employee: any) {
+export function calculateFederalTaxes(employee: any) {
   try {
     let baseIncome = employee.job.annualSalary;
     console.log("baseIncome", baseIncome);
@@ -101,4 +101,22 @@ export default function calculateFederalTaxes(employee: any) {
   } catch (error) {
     console.error(error);
   }
+}
+
+export function calculateSocialSecurityWitholding(employee: any) {
+  return parseFloat(
+    (
+      (employee.job.annualSalary / getDivisor(employee.job.payFrequency)) *
+      0.062
+    ).toFixed(2)
+  );
+}
+
+export function calculateMedicareWitholding(employee: any) {
+  return parseFloat(
+    (
+      (employee.job.annualSalary / getDivisor(employee.job.payFrequency)) *
+      0.0149
+    ).toFixed(2)
+  );
 }

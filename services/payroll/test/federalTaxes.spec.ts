@@ -1,6 +1,10 @@
 import chai from "chai";
 const expect = chai.expect;
-import calculateFederalTaxes from "../FederalTaxes/federalTaxes";
+import {
+  calculateFederalTaxes,
+  calculateSocialSecurityWitholding,
+  calculateMedicareWitholding,
+} from "../FederalTaxes/federalTaxes";
 
 const marriedFilingJointlyEmployee = {
   job: {
@@ -70,5 +74,23 @@ describe("Federal Taxes Tests", () => {
   it("Process Federal Taxes for head of household", () => {
     let federalTaxAmount = calculateFederalTaxes(headOfHousehold);
     expect(federalTaxAmount).to.equal(804);
+  });
+});
+
+describe("Social Security Witholding", () => {
+  it("calculates Social Security witholding", () => {
+    let socialSecurityWitholding = calculateSocialSecurityWitholding(
+      marriedFilingJointlyEmployee
+    );
+    expect(socialSecurityWitholding).to.equal(218.24);
+  });
+});
+
+describe("Medicare Witholding", () => {
+  it("calculates Medicare witholding", () => {
+    let socialSecurityWitholding = calculateMedicareWitholding(
+      marriedFilingJointlyEmployee
+    );
+    expect(socialSecurityWitholding).to.equal(52.45);
   });
 });

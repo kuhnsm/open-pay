@@ -4,7 +4,11 @@ import {
   calculatePreTaxDeductions,
   calculatePostTaxDeductions,
 } from "./deductions";
-import calculateFederalTaxes from "./FederalTaxes/federalTaxes";
+import {
+  calculateFederalTaxes,
+  calculateSocialSecurityWitholding,
+  calculateMedicareWitholding,
+} from "./FederalTaxes/federalTaxes";
 import calculateStateTaxes from "./stateTaxes";
 import updateYTD from "./updateYTD";
 
@@ -32,6 +36,8 @@ function Payroll(payrollTags: string[]) {
           grossPay: 0,
           preTaxDeductions: 0,
           federalTaxes: 0,
+          socialSecurityWitholding: 0,
+          medicareWitholding: 0,
           stateTaxes: 0,
           postTaxDeductions: 0,
           netPay: 0,
@@ -52,7 +58,12 @@ function Payroll(payrollTags: string[]) {
         );
         console.log(`Pretax deductions ${employeeCheck.preTaxDeductions}`);
         // calculate federal taxes
-        employeeCheck.federalTaxes = calculateFederalTaxes(employee);
+        employeeCheck.federalTaxes = calculateFederalTaxes(employee) ?? 0;
+        // calculate social security witholding
+        employeeCheck.socialSecurityWitholding =
+          calculateSocialSecurityWitholding(employee) ?? 0;
+        employeeCheck.medicareWitholding =
+          calculateMedicareWitholding(employee) ?? 0;
         console.log(`Federal taxes ${employeeCheck.federalTaxes}`);
         // calculate state taxes
         employeeCheck.stateTaxes = calculateStateTaxes(employee);

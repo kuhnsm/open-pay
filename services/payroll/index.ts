@@ -73,6 +73,8 @@ function Payroll(payrollTags: string[]) {
           employeeCheck.grossPay -
           employeeCheck.preTaxDeductions -
           employeeCheck.federalTaxes -
+          employeeCheck.socialSecurityWitholding -
+          employeeCheck.medicareWitholding -
           employeeCheck.stateTaxes;
         employeeCheck.postTaxDeductions = calculatePostTaxDeductions(
           employee,

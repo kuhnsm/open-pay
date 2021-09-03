@@ -1,3 +1,4 @@
 export default function calculateStateTaxes(employee: any) {
-  return 100.34;
+  // TODO calculate state taxes for all 50 states, no biggie.
+  return 0;
 }

@@ -15,8 +15,8 @@ const marriedFilingJointlyEmployee = {
   },
   federalTaxes: {
     filingStatus: "Married, filing jointly",
-    qualifyingDependents: 2000,
-    otherDependents: 500,
+    qualifyingDependents: 1,
+    otherDependents: 1,
     otherIncome: 0,
     deductions: 0,
     multipleJob: false,
@@ -33,8 +33,8 @@ const singleOrMarriedFilingSeperately = {
   },
   federalTaxes: {
     filingStatus: "Single or married filing seperately",
-    qualifyingDependents: 2000,
-    otherDependents: 500,
+    qualifyingDependents: 1,
+    otherDependents: 1,
     otherIncome: 0,
     deductions: 0,
     multipleJob: false,
@@ -51,8 +51,8 @@ const headOfHousehold = {
   },
   federalTaxes: {
     filingStatus: "Head of household",
-    qualifyingDependents: 2000,
-    otherDependents: 500,
+    qualifyingDependents: 1,
+    otherDependents: 1,
     otherIncome: 0,
     deductions: 0,
     multipleJob: false,

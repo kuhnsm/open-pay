@@ -9,6 +9,9 @@ import {
   headOfHousehold,
 } from "./PercentageMethodTables";
 
+const QUALIFYING_DEPENDENT_MULTIPLIER = 2000;
+const OTHER_DEPENDENTS_MULTIPLIER = 500;
+
 function getDivisor(payFrequency: string) {
   switch (payFrequency) {
     case "Semiannually":
@@ -85,8 +88,9 @@ export function calculateFederalTaxes(employee: any) {
     let tentativeHoldingAmount = line2g / getDivisor(employee.job.payFrequency);
     console.log("tentativeHoldingAmount", tentativeHoldingAmount);
     let taxCredits =
-      (employee.federalTaxes.qualifyingDependents +
-        employee.federalTaxes.otherDependents) /
+      (employee.federalTaxes.qualifyingDependents *
+        QUALIFYING_DEPENDENT_MULTIPLIER +
+        employee.federalTaxes.otherDependents * OTHER_DEPENDENTS_MULTIPLIER) /
       getDivisor(employee.job.payFrequency);
     console.log("taxCredits", taxCredits);
     let netWitholdingAmount = tentativeHoldingAmount - taxCredits;

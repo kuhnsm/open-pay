@@ -19,6 +19,8 @@ let filingStatus = [
   "Head of household",
 ];
 let gender = ["Male", "Female", "Other"];
+let boolArray = [true, false];
+
 function getEmployee() {
   //return {
   let thisEmployeeType =
@@ -57,7 +59,12 @@ function getEmployee() {
     federalTaxes: {
       filingStatus:
         filingStatus[Math.floor(Math.random() * filingStatus.length)],
-      qualifyingDependents: 2,
+      qualifyingDependents: faker.datatype.number(6),
+      otherDependents: faker.datatype.number(2),
+      otherIncome: faker.datatype.number(2),
+      deductions: faker.datatype.number(2),
+      multipleJob: boolArray[Math.floor(Math.random() * 2)],
+      extraWithholding: faker.datatype.number(200),
     },
     deductions: [
       {
